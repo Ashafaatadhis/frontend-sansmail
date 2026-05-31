@@ -1,0 +1,285 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ==================== Light Mode (Default) ==================== */
+:root {
+  /* Brand & Primary */
+  --primary: #5645d4;
+  --primary-pressed: #4534b3;
+  --primary-deep: #3a2a99;
+  --on-primary: #ffffff;
+  --brand-navy: #0a1530;
+  --brand-navy-deep: #070f24;
+  --brand-navy-mid: #1a2a52;
+  --link-blue: #0075de;
+  --link-blue-pressed: #005bab;
+
+  /* Brand Spectrum */
+  --brand-orange: #dd5b00;
+  --brand-orange-deep: #793400;
+  --brand-pink: #ff64c8;
+  --brand-pink-deep: #a02e6d;
+  --brand-purple: #7b3ff2;
+  --brand-purple-300: #d6b6f6;
+  --brand-purple-800: #391c57;
+  --brand-teal: #2a9d99;
+  --brand-green: #1aae39;
+  --brand-yellow: #f5d75e;
+  --brand-brown: #523410;
+
+  /* Card Tints */
+  --card-tint-peach: #ffe8d4;
+  --card-tint-rose: #fde0ec;
+  --card-tint-mint: #d9f3e1;
+  --card-tint-lavender: #e6e0f5;
+  --card-tint-sky: #dcecfa;
+  --card-tint-yellow: #fef7d6;
+  --card-tint-yellow-bold: #f9e79f;
+  --card-tint-cream: #f8f5e8;
+  --card-tint-gray: #f0eeec;
+
+  /* Surface */
+  --canvas: #ffffff;
+  --surface: #f6f5f4;
+  --surface-soft: #fafaf9;
+  --hairline: #e5e3df;
+  --hairline-soft: #ede9e4;
+  --hairline-strong: #c8c4be;
+
+  /* Text */
+  --ink-deep: #000000;
+  --ink: #1a1a1a;
+  --charcoal: #37352f;
+  --slate: #5d5b54;
+  --steel: #787671;
+  --stone: #a4a097;
+  --muted: #bbb8b1;
+
+  /* Semantic */
+  --success: #1aae39;
+  --warning: #dd5b00;
+  --error: #e03131;
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+/* ==================== Dark Mode ==================== */
+.dark {
+  /* Brand & Primary */
+  --primary: #7b6aff;
+  --primary-pressed: #6a59e6;
+  --primary-deep: #5645d4;
+  --on-primary: #ffffff;
+  --brand-navy: #0a1530;
+  --brand-navy-deep: #070f24;
+  --brand-navy-mid: #1a2a52;
+  --link-blue: #4da6ff;
+  --link-blue-pressed: #80c0ff;
+
+  /* Brand Spectrum */
+  --brand-orange: #ff7b3d;
+  --brand-orange-deep: #dd5b00;
+  --brand-pink: #ff8ad8;
+  --brand-pink-deep: #ff64c8;
+  --brand-purple: #9b6aff;
+  --brand-purple-300: #b49aff;
+  --brand-purple-800: #d6b6f6;
+  --brand-teal: #4dc4bf;
+  --brand-green: #3dc95a;
+  --brand-yellow: #f5d75e;
+  --brand-brown: #a48040;
+
+  /* Card Tints (darker variants for dark mode) */
+  --card-tint-peach: #3d2a1a;
+  --card-tint-rose: #3d1a2a;
+  --card-tint-mint: #1a3d2a;
+  --card-tint-lavender: #2a1a3d;
+  --card-tint-sky: #1a2a3d;
+  --card-tint-yellow: #3d3a1a;
+  --card-tint-yellow-bold: #4d4a1a;
+  --card-tint-cream: #2d2a20;
+  --card-tint-gray: #252525;
+
+  /* Surface */
+  --canvas: #191919;
+  --surface: #222222;
+  --surface-soft: #1e1e1e;
+  --hairline: #333333;
+  --hairline-soft: #2a2a2a;
+  --hairline-strong: #444444;
+
+  /* Text */
+  --ink-deep: #ffffff;
+  --ink: #e5e5e5;
+  --charcoal: #d4d4d4;
+  --slate: #a0a0a0;
+  --steel: #808080;
+  --stone: #666666;
+  --muted: #555555;
+
+  /* Semantic */
+  --success: #3dc95a;
+  --warning: #ff7b3d;
+  --error: #ff5555;
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+/* ==================== Tailwind Theme ==================== */
+@theme {
+  --font-sans:
+    "Inter", -apple-system, system-ui, "Segoe UI", Helvetica, sans-serif;
+
+  /* Colors (reference CSS variables) */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-skeleton: var(--skeleton);
+  --color-primary: var(--primary);
+  --color-primary-pressed: var(--primary-pressed);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-foreground: var(--on-primary);
+  --color-on-primary: var(--on-primary);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-deep: var(--brand-navy-deep);
+  --color-brand-navy-mid: var(--brand-navy-mid);
+  --color-link-blue: var(--link-blue);
+  --color-link-blue-pressed: var(--link-blue-pressed);
+
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-orange-deep: var(--brand-orange-deep);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-deep: var(--brand-pink-deep);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-purple-300: var(--brand-purple-300);
+  --color-brand-purple-800: var(--brand-purple-800);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-green: var(--brand-green);
+  --color-brand-yellow: var(--brand-yellow);
+  --color-brand-brown: var(--brand-brown);
+
+  --color-card-tint-peach: var(--card-tint-peach);
+  --color-card-tint-rose: var(--card-tint-rose);
+  --color-card-tint-mint: var(--card-tint-mint);
+  --color-card-tint-lavender: var(--card-tint-lavender);
+  --color-card-tint-sky: var(--card-tint-sky);
+  --color-card-tint-yellow: var(--card-tint-yellow);
+  --color-card-tint-yellow-bold: var(--card-tint-yellow-bold);
+  --color-card-tint-cream: var(--card-tint-cream);
+  --color-card-tint-gray: var(--card-tint-gray);
+
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-surface-soft: var(--surface-soft);
+  --color-hairline: var(--hairline);
+  --color-hairline-soft: var(--hairline-soft);
+  --color-hairline-strong: var(--hairline-strong);
+
+  --color-ink-deep: var(--ink-deep);
+  --color-ink: var(--ink);
+  --color-charcoal: var(--charcoal);
+  --color-slate: var(--slate);
+  --color-steel: var(--steel);
+  --color-stone: var(--stone);
+  --color-muted: var(--muted);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  /* Border Radius */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-full: 9999px;
+
+  /* Animation vars for orbiting/ripple */
+  --background: var(--canvas);
+  --foreground: var(--ink-deep);
+  --skeleton: var(--hairline-soft);
+  --btn-border: var(--hairline-strong);
+  --input: var(--hairline);
+}
+
+/* ==================== Body ==================== */
+body {
+  @apply bg-background text-foreground;
+}
+
+/* ==================== View Transition ==================== */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Allow child animations to continue */
+.view-transition-group {
+  animation-play-state: running !important;
+}
+
+/* ==================== Component Styles ==================== */
+.g-button {
+  border-color: var(--btn-border);
+}
+
+/* ==================== Animations ==================== */
+@keyframes ripple {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg) translateY(calc(var(--radius) * 1px))
+      rotate(-360deg);
+  }
+}
+
+@keyframes spin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.animate-ripple {
+  animation: ripple 2s ease calc(var(--i, 0) * 0.2s) infinite;
+}
+
+.animate-orbit {
+  animation: orbit calc(var(--duration) * 1s) linear infinite;
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
