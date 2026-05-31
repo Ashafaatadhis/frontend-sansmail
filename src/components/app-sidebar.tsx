@@ -1,15 +1,14 @@
-import * as React from "react"
+import * as React from "react";
 import {
   IconDashboard,
   IconUsers,
   IconKey,
   IconWorld,
-  IconSettings,
   IconInnerShadowTop,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -18,7 +17,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
 
 const data = {
   user: {
@@ -48,7 +47,7 @@ const data = {
       icon: IconWorld,
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -75,5 +74,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

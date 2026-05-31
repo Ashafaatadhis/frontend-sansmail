@@ -44,7 +44,7 @@ export default function ClientGenerate() {
     onSuccess: (data) => {
       setGeneratedEmail(data.address);
       setTimeLeft(data.expiresIn);
-      startTimer(data.expiresIn);
+      startTimer();
       toast.success("Email generated");
     },
     onError: (err: any) => {
@@ -53,7 +53,7 @@ export default function ClientGenerate() {
   });
 
   // Timer
-  const startTimer = (seconds: number) => {
+  const startTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
