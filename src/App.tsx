@@ -1,4 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
+import Landing from './pages/Landing'
 import Login from './pages/Login'
 import ClientLogin from './pages/ClientLogin'
 import Room from './pages/Room'
@@ -18,6 +19,7 @@ import PublicInbox from './pages/PublicInbox'
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<Landing />} />
       <Route path="/inbox" element={<PublicInbox />} />
       <Route path="/login" element={<Login />} />
       <Route path="/access" element={<ClientLogin />} />
@@ -37,7 +39,7 @@ function App() {
         <Route path="domains/create" element={<DomainForm />} />
         <Route path="domains/:id/edit" element={<DomainForm />} />
       </Route>
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

@@ -1,0 +1,42 @@
+import { stats } from './data'
+
+export default function Stats() {
+  return (
+    <section style={{ background: 'var(--brand-navy)', padding: '0 24px 80px' }}>
+      <div style={{ maxWidth: 860, margin: '0 auto' }}>
+        {/* Divider */}
+        <div style={{ height: 1, background: 'rgba(255,255,255,0.07)', marginBottom: 48 }} />
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0 }}>
+          {stats.map((s, i) => (
+            <div
+              key={i}
+              style={{
+                textAlign: 'center',
+                padding: '0 24px',
+                borderRight: i < stats.length - 1 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+              }}
+            >
+              <div style={{
+                fontSize: 'clamp(28px, 4vw, 44px)',
+                fontWeight: 700,
+                letterSpacing: '-1.5px',
+                lineHeight: 1,
+                marginBottom: 10,
+                background: 'linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.6) 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+                backgroundClip: 'text',
+              }}>
+                {s.value}
+              </div>
+              <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.35)', fontWeight: 500, letterSpacing: 0.2 }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
