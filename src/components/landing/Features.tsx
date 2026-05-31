@@ -127,7 +127,7 @@ function SpiralBackground() {
 
   return (
     <div
-      className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-25"
+      className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-35"
       style={{
         maskImage:
           "radial-gradient(circle at center, white, rgba(255,255,255,0.1) 60%, transparent 75%)",
@@ -189,7 +189,7 @@ export default function Features() {
     <section
       id="fitur"
       className="relative w-full"
-      style={{ minHeight: "100vh", display: "flex", alignItems: "center" }}
+      style={{ minHeight: "100vh", display: "flex", alignItems: "center", overflow: "hidden" }}
     >
       {/* Dark background */}
       <div
