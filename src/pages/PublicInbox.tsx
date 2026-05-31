@@ -162,7 +162,7 @@ export default function PublicInbox() {
 
           <div className="flex gap-4 h-[60vh] max-sm:flex-col max-sm:h-auto">
             {/* Email List */}
-            <div className="w-80 shrink-0">
+            <div className="w-80 shrink-0 max-sm:w-full">
               <Card className="border-hairline h-full max-sm:h-[40vh]">
                 <CardContent className="p-0 h-full overflow-y-auto">
                   {isLoading ? (
