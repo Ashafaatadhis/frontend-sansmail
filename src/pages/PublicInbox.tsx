@@ -1,11 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import {
-  IconMail,
-  IconSearch,
-  IconRefresh,
-} from "@tabler/icons-react";
+import { IconMail, IconSearch, IconRefresh } from "@tabler/icons-react";
 import api from "@/lib/axios";
 import socket from "@/lib/socket";
 
@@ -46,7 +42,11 @@ export default function PublicInbox() {
     },
   });
 
-  const { data: inboxData, refetch, isLoading } = useQuery({
+  const {
+    data: inboxData,
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["public-inbox", address],
     queryFn: async () => {
       const { data } = await api.get(`/public/inbox/${address}`);
@@ -108,7 +108,9 @@ export default function PublicInbox() {
       <div className="max-w-5xl mx-auto pt-8 px-4">
         <Card className="border-hairline">
           <CardContent className="pt-6">
-            <h2 className="text-xl font-semibold text-ink-deep mb-4">Check Inbox</h2>
+            <h2 className="text-xl font-semibold text-ink-deep mb-4">
+              Check Inbox
+            </h2>
             <div className="flex gap-3 max-sm:flex-col">
               <div className="flex-1">
                 <Input
@@ -134,7 +136,10 @@ export default function PublicInbox() {
                   </SelectContent>
                 </Select>
               </div>
-              <Button onClick={handleCheck} disabled={!domain || !username.trim()}>
+              <Button
+                onClick={handleCheck}
+                disabled={!domain || !username.trim()}
+              >
                 <IconSearch className="h-4 w-4 mr-1" />
                 Check
               </Button>
@@ -147,7 +152,9 @@ export default function PublicInbox() {
       {address && (
         <div className="max-w-5xl mx-auto mt-6 px-4 pb-8">
           <div className="flex items-center gap-3 mb-4">
-            <h3 className="text-lg font-semibold text-ink-deep font-mono">{address}</h3>
+            <h3 className="text-lg font-semibold text-ink-deep font-mono">
+              {address}
+            </h3>
             <Button variant="ghost" size="icon-sm" onClick={() => refetch()}>
               <IconRefresh className="h-4 w-4" />
             </Button>
@@ -155,20 +162,25 @@ export default function PublicInbox() {
 
           <div className="flex gap-4 h-[60vh] max-sm:flex-col max-sm:h-auto">
             {/* Email List */}
-            <div className="flex-1 min-w-0">
+            <div className="w-80 shrink-0">
               <Card className="border-hairline h-full max-sm:h-[40vh]">
                 <CardContent className="p-0 h-full overflow-y-auto">
                   {isLoading ? (
                     <div className="p-4 space-y-3">
                       {Array.from({ length: 3 }).map((_, i) => (
-                        <div key={i} className="h-14 bg-surface rounded animate-pulse" />
+                        <div
+                          key={i}
+                          className="h-14 bg-surface rounded animate-pulse"
+                        />
                       ))}
                     </div>
                   ) : emails.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-muted">
                       <IconMail className="h-8 w-8 mb-2 opacity-50" />
                       <p className="text-sm">No emails yet</p>
-                      <p className="text-xs mt-1">Waiting for incoming mail...</p>
+                      <p className="text-xs mt-1">
+                        Waiting for incoming mail...
+                      </p>
                     </div>
                   ) : (
                     emails.map((email) => (
@@ -179,8 +191,12 @@ export default function PublicInbox() {
                           selectedEmail?.id === email.id ? "bg-surface" : ""
                         }`}
                       >
-                        <p className="text-sm font-medium text-ink truncate">{email.subject}</p>
-                        <p className="text-xs text-steel truncate">{email.from}</p>
+                        <p className="text-sm font-medium text-ink truncate">
+                          {email.subject}
+                        </p>
+                        <p className="text-xs text-steel truncate">
+                          {email.from}
+                        </p>
                         <p className="text-xs text-muted mt-0.5">
                           {new Date(email.received).toLocaleTimeString()}
                         </p>
@@ -198,9 +214,12 @@ export default function PublicInbox() {
                   {selectedEmail ? (
                     <div className="h-full flex flex-col">
                       <div className="pb-4 border-b border-hairline">
-                        <h2 className="text-xl font-semibold text-ink-deep">{selectedEmail.subject}</h2>
+                        <h2 className="text-xl font-semibold text-ink-deep">
+                          {selectedEmail.subject}
+                        </h2>
                         <p className="text-sm text-steel mt-1">
-                          From: <span className="text-ink">{selectedEmail.from}</span>
+                          From:{" "}
+                          <span className="text-ink">{selectedEmail.from}</span>
                         </p>
                         <p className="text-xs text-muted mt-1">
                           {new Date(selectedEmail.received).toLocaleString()}
@@ -209,7 +228,9 @@ export default function PublicInbox() {
                       <div className="flex-1 pt-4 overflow-y-auto">
                         <div
                           className="text-sm text-ink leading-relaxed"
-                          dangerouslySetInnerHTML={{ __html: getBody(selectedEmail) }}
+                          dangerouslySetInnerHTML={{
+                            __html: getBody(selectedEmail),
+                          }}
                         />
                       </div>
                     </div>
