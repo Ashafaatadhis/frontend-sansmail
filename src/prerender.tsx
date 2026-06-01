@@ -4,7 +4,7 @@
 export async function prerender() {
   return {
     html: `
-      <div>
+      <div style="position:absolute;opacity:0;pointer-events:none;height:0;overflow:hidden;clip:rect(0,0,0,0)">
         <header>
           <a href="/">SansMail</a>
         </header>
