@@ -170,7 +170,7 @@ export default function PublicInbox() {
           <div className="flex gap-4 h-[60vh] max-sm:flex-col max-sm:h-auto">
             {/* Email List */}
             <div className="w-80 shrink-0 max-sm:w-full">
-              <Card className="border-hairline h-full max-sm:h-[40vh]">
+              <Card className="border-hairline h-full max-sm:h-[40vh] bg-canvas">
                 <CardContent className="p-0 h-full overflow-y-auto">
                   {isLoading ? (
                     <div className="p-4 space-y-3">
@@ -214,7 +214,7 @@ export default function PublicInbox() {
 
             {/* Email Content */}
             <div className="flex-1 min-w-0">
-              <Card className="border-hairline h-full max-sm:h-[50vh]">
+              <Card className="border-hairline h-full max-sm:h-[50vh] bg-canvas">
                 <CardContent className="h-full">
                   {selectedEmail ? (
                     <div className="h-full flex flex-col">

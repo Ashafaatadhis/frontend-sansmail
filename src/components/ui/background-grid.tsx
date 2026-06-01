@@ -11,11 +11,13 @@ export function BackgroundGrid({ className }: BackgroundGridProps) {
       style={{
         background: 'var(--canvas)',
         backgroundImage: `
-          linear-gradient(to right, var(--hairline) 1px, transparent 1px),
-          linear-gradient(to bottom, var(--hairline) 1px, transparent 1px),
-          radial-gradient(circle at 50% 30%, rgba(139,92,246,0.12) 0%, rgba(139,92,246,0.04) 40%, transparent 70%)
+          linear-gradient(to right, var(--hairline-soft) 1px, transparent 1px),
+          linear-gradient(to bottom, var(--hairline-soft) 1px, transparent 1px),
+          radial-gradient(circle at 50% 30%, rgba(139,92,246,0.1) 0%, rgba(139,92,246,0.03) 40%, transparent 70%)
         `,
         backgroundSize: '32px 32px, 32px 32px, 100% 100%',
+        maskImage: 'radial-gradient(ellipse 75% 100% at 50% 50%, black 30%, transparent 100%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 75% 100% at 50% 50%, black 30%, transparent 100%)',
       }}
     />
   )
