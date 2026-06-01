@@ -5,4 +5,13 @@ Disallow: /room
 Disallow: /access
 Disallow: /login
 
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
 Sitemap: https://sansmail.my.id/sitemap.xml
