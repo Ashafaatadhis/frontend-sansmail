@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /room
+Disallow: /access
+Disallow: /login
+
+Sitemap: https://sansmail.my.id/sitemap.xml

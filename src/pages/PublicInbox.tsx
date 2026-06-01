@@ -111,7 +111,7 @@ export default function PublicInbox() {
       <BackgroundGrid />
       {/* Header — bg solid supaya grid tidak tembus */}
       <header className="relative z-10 bg-canvas border-b border-hairline h-14 flex items-center justify-between px-6">
-        <span className="text-lg font-semibold text-ink-deep">SansMail</span>
+        <img src="/sansmail-2.svg" alt="SansMail" style={{ height: 58, width: 'auto' }} />
         <AnimatedThemeToggleButton type="horizontal" />
       </header>
 
