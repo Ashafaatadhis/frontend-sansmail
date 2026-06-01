@@ -161,7 +161,7 @@ const features = [
   {
     title: "Auto-Expire 60 Menit",
     blurb:
-      "Email otomatis terhapus setelah 1 jam. Tidak perlu hapus manual, privasi terjaga.",
+      "Email otomatis terhapus setelah 30 hari. Tidak perlu hapus manual, privasi terjaga.",
     meta: "TTL",
     icon: <Clock size={16} />,
     span: "md:col-span-2 md:row-span-1",

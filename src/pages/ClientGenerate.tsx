@@ -5,6 +5,7 @@ import { IconCopy, IconClock, IconRefresh } from "@tabler/icons-react";
 import api from "@/lib/axios";
 
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -22,6 +23,7 @@ import {
 
 export default function ClientGenerate() {
   const [selectedDomain, setSelectedDomain] = useState("");
+  const [customPrefix, setCustomPrefix] = useState("");
   const [generatedEmail, setGeneratedEmail] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -38,7 +40,9 @@ export default function ClientGenerate() {
   // Generate email
   const generateMutation = useMutation({
     mutationFn: async (domain: string) => {
-      const { data } = await api.post("/emails/generate", { domain });
+      const body: any = { domain };
+      if (customPrefix.trim()) body.prefix = customPrefix.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+      const { data } = await api.post("/emails/generate", body);
       return data.data;
     },
     onSuccess: (data) => {
@@ -114,6 +118,20 @@ export default function ClientGenerate() {
                   ))}
                 </SelectContent>
               </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium text-charcoal">
+                Prefix Custom <span className="text-steel font-normal">(opsional)</span>
+              </label>
+              <Input
+                placeholder="contoh: johndoe"
+                value={customPrefix}
+                onChange={(e) => setCustomPrefix(e.target.value.replace(/[^a-z0-9]/gi, ''))}
+                className="h-9 font-mono text-sm"
+                maxLength={30}
+              />
+              <p className="text-xs text-stone">Kosongkan untuk nama acak. Jika prefix sudah dipakai, akan muncul error.</p>
             </div>
 
             <Button

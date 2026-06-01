@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/sidebar"
 
 const navItems = [
-  { title: "Inbox", url: "/room", icon: IconMail },
+  { title: "Generate", url: "/room", icon: IconMail },
   { title: "Domains", url: "/room/domains", icon: IconWorld },
 ]
 

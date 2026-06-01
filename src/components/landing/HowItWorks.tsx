@@ -94,7 +94,7 @@ const stepsData = [
       "Email masuk langsung muncul di inbox tanpa perlu refresh. WebSocket handle semuanya.",
     benefits: [
       "Live update tanpa polling",
-      "Auto-expire 60 menit",
+      "Auto-expire 30 hari",
       "Baca isi email lengkap",
     ],
   },

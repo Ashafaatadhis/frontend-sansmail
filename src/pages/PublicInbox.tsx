@@ -1,21 +1,19 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { IconMail, IconSearch, IconRefresh } from "@tabler/icons-react";
+import {
+  IconMail,
+  IconRefresh,
+  IconSearch,
+  IconAlertCircle,
+} from "@tabler/icons-react";
 import api from "@/lib/axios";
 import socket from "@/lib/socket";
-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { AnimatedThemeToggleButton } from "@/components/ui/animated-theme-toggle-button";
+import { BackgroundGrid } from "@/components/ui/background-grid";
 
 type Email = {
   id: string;
@@ -28,13 +26,13 @@ type Email = {
 };
 
 export default function PublicInbox() {
-  const [domain, setDomain] = useState("");
-  const [username, setUsername] = useState("");
+  const [input, setInput] = useState("");
   const [address, setAddress] = useState("");
+  const [error, setError] = useState("");
   const [emails, setEmails] = useState<Email[]>([]);
   const [selectedEmail, setSelectedEmail] = useState<Email | null>(null);
 
-  const { data: domains } = useQuery({
+  const { data: domains = [] } = useQuery<string[]>({
     queryKey: ["public-domains"],
     queryFn: async () => {
       const { data } = await api.get("/public/domains");
@@ -61,17 +59,14 @@ export default function PublicInbox() {
 
   useEffect(() => {
     if (!address) return;
-
     socket.connect();
     socket.emit("join_inbox", address);
-
     socket.on("new_email", (email: Email) => {
       if (email.to === address) {
         setEmails((prev) => [email, ...prev]);
-        toast.success(`New email from ${email.from}`);
+        toast.success(`Email baru dari ${email.from}`);
       }
     });
-
     return () => {
       socket.emit("leave_inbox", address);
       socket.off("new_email");
@@ -80,83 +75,95 @@ export default function PublicInbox() {
   }, [address]);
 
   const handleCheck = () => {
-    if (!domain || !username.trim()) {
-      toast.error("Select domain and enter username");
+    setError("");
+    const trimmed = input.trim().toLowerCase();
+
+    // Validasi format email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmed)) {
+      setError("Format email tidak valid. Contoh: nama@sansmail.my.id");
       return;
     }
-    const fullAddress = `${username.trim().toLowerCase()}@${domain}`;
-    setAddress(fullAddress);
+
+    // Ambil domain dari input
+    const domain = trimmed.split("@")[1];
+
+    // Cek domain terdaftar dan aktif
+    if (!domains.includes(domain)) {
+      setError(`Domain "${domain}" tidak terdaftar atau tidak aktif.`);
+      return;
+    }
+
+    setAddress(trimmed);
     setSelectedEmail(null);
     setEmails([]);
   };
 
   const getBody = (email: Email) => {
     if (email.bodyHtml) return email.bodyHtml;
-    if (email.bodyText) return `<pre>${email.bodyText}</pre>`;
+    if (email.bodyText)
+      return `<pre style="white-space:pre-wrap">${email.bodyText}</pre>`;
     return "<p>No content</p>";
   };
 
   return (
-    <div className="min-h-screen bg-canvas">
-      {/* Header */}
-      <header className="border-b border-hairline h-14 flex items-center justify-between px-6">
+    <div className="min-h-screen bg-canvas relative">
+      <BackgroundGrid />
+      {/* Header — bg solid supaya grid tidak tembus */}
+      <header className="relative z-10 bg-canvas border-b border-hairline h-14 flex items-center justify-between px-6">
         <span className="text-lg font-semibold text-ink-deep">SansMail</span>
         <AnimatedThemeToggleButton type="horizontal" />
       </header>
 
-      {/* Search Bar */}
-      <div className="max-w-5xl mx-auto pt-8 px-4">
-        <Card className="border-hairline">
-          <CardContent className="pt-6">
-            <h2 className="text-xl font-semibold text-ink-deep mb-4">
-              Check Inbox
-            </h2>
-            <div className="flex gap-3 max-sm:flex-col">
-              <div className="flex-1">
-                <Input
-                  placeholder="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="h-10"
-                  onKeyDown={(e) => e.key === "Enter" && handleCheck()}
-                />
-              </div>
-              <span className="flex items-center text-steel text-lg">@</span>
-              <div className="flex-1">
-                <Select value={domain} onValueChange={setDomain}>
-                  <SelectTrigger className="h-10 w-full">
-                    <SelectValue placeholder="domain" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {domains?.map((d: string) => (
-                      <SelectItem key={d} value={d}>
-                        {d}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <Button
-                onClick={handleCheck}
-                disabled={!domain || !username.trim()}
-              >
-                <IconSearch className="h-4 w-4 mr-1" />
-                Check
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+      {/* Search */}
+      <div className="relative z-10 max-w-2xl mx-auto pt-10 px-4">
+        <div className="mb-6 text-center">
+          <h1 className="text-2xl font-bold text-ink-deep mb-1">Cek Inbox</h1>
+          <p className="text-sm text-steel">
+            Masukkan alamat email untuk melihat inbox
+          </p>
+        </div>
+
+        <div className="flex gap-2">
+          <Input
+            placeholder="nama@sansmail.my.id"
+            value={input}
+            onChange={(e) => {
+              setInput(e.target.value);
+              setError("");
+            }}
+            onKeyDown={(e) => e.key === "Enter" && handleCheck()}
+            className={`h-10 flex-1 font-mono text-sm bg-canvas ${error ? "border-red-400 focus-visible:ring-red-400" : ""}`}
+          />
+          <Button onClick={handleCheck} disabled={!input.trim()}>
+            <IconSearch className="h-4 w-4 mr-1" />
+            Cek
+          </Button>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className="mt-3 flex items-center gap-2 text-sm text-red-500">
+            <IconAlertCircle className="h-4 w-4 shrink-0" />
+            {error}
+          </div>
+        )}
       </div>
 
-      {/* Content */}
+      {/* Inbox */}
       {address && (
-        <div className="max-w-5xl mx-auto mt-6 px-4 pb-8">
+        <div className="relative z-10 max-w-5xl mx-auto mt-8 px-4 pb-8">
           <div className="flex items-center gap-3 mb-4">
-            <h3 className="text-lg font-semibold text-ink-deep font-mono">
+            <h3 className="text-base font-semibold text-ink-deep font-mono">
               {address}
             </h3>
-            <Button variant="ghost" size="icon-sm" onClick={() => refetch()}>
-              <IconRefresh className="h-4 w-4" />
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => refetch()}
+              className="h-7 w-7"
+            >
+              <IconRefresh className="h-3.5 w-3.5" />
             </Button>
           </div>
 
@@ -176,10 +183,10 @@ export default function PublicInbox() {
                     </div>
                   ) : emails.length === 0 ? (
                     <div className="flex flex-col items-center justify-center h-full text-muted">
-                      <IconMail className="h-8 w-8 mb-2 opacity-50" />
-                      <p className="text-sm">No emails yet</p>
-                      <p className="text-xs mt-1">
-                        Waiting for incoming mail...
+                      <IconMail className="h-8 w-8 mb-2 opacity-40" />
+                      <p className="text-sm">Belum ada email</p>
+                      <p className="text-xs mt-1 text-stone">
+                        Menunggu email masuk...
                       </p>
                     </div>
                   ) : (
@@ -187,9 +194,7 @@ export default function PublicInbox() {
                       <button
                         key={email.id}
                         onClick={() => setSelectedEmail(email)}
-                        className={`w-full text-left px-4 py-3 border-b border-hairline hover:bg-surface-soft transition-colors ${
-                          selectedEmail?.id === email.id ? "bg-surface" : ""
-                        }`}
+                        className={`w-full text-left px-4 py-3 border-b border-hairline hover:bg-surface-soft transition-colors ${selectedEmail?.id === email.id ? "bg-surface" : ""}`}
                       >
                         <p className="text-sm font-medium text-ink truncate">
                           {email.subject}
@@ -218,7 +223,7 @@ export default function PublicInbox() {
                           {selectedEmail.subject}
                         </h2>
                         <p className="text-sm text-steel mt-1">
-                          From:{" "}
+                          Dari:{" "}
                           <span className="text-ink">{selectedEmail.from}</span>
                         </p>
                         <p className="text-xs text-muted mt-1">
@@ -238,7 +243,7 @@ export default function PublicInbox() {
                     <div className="flex items-center justify-center h-full text-muted">
                       <div className="text-center">
                         <IconMail className="h-12 w-12 mx-auto mb-3 opacity-30" />
-                        <p>Select an email to read</p>
+                        <p>Pilih email untuk dibaca</p>
                       </div>
                     </div>
                   )}
